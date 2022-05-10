@@ -11,6 +11,16 @@ void kbd_init() {
     idt_register_entry(KBD_IRQ_VECT, kbd_irq_handler);
 }
 
+void kbd_set_waiting_key(dispatch_func_t dispatch) {
+    _waiting_key  = TRUE;
+    _kbd_dispatch = dispatch;
+}
+
+void kbd_clear_waiting_key() {
+    _waiting_key  = FALSE;
+    _kbd_dispatch = NULL;
+}
+
 void kbd_irq_handler() {
     __asm__("pusha");
 
@@ -23,16 +33,5 @@ void kbd_irq_handler() {
 
     pic_send_eoi();
     __asm__("popa");
-    __asm__("leave");
     __asm__("iret");
-}
-
-void kbd_set_waiting_key(dispatch_func_t dispatch) {
-    _waiting_key  = TRUE;
-    _kbd_dispatch = dispatch;
-}
-
-void kbd_clear_waiting_key() {
-    _waiting_key  = FALSE;
-    _kbd_dispatch = NULL;
 }

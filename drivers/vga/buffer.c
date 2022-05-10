@@ -39,6 +39,24 @@ void vgabuff_push(vga_buff_t buffer) {
         _screen[i] = buffer[i];
 }
 
+void vgabuff_scroll(bool_t direction) {
+    if (direction == TRUE) {
+        return;
+    }
+    else {
+        for (uint16_t i = 0; i < VGA_SIZE; i++) {
+            if (i < VGA_WIDTH)
+                continue;
+            
+            _screen[(i - VGA_WIDTH) * 2] = _screen[i * 2];
+            _screen[(i - VGA_WIDTH) * 2 + 1] = _screen[i * 2 + 1];
+
+            _screen[i * 2] = 0;
+            _screen[i * 2 + 1] = vga_get_attr();
+        }
+    }
+}
+
 uint16_t vgabuff_output_c(char c, int32_t offset) {
     if (offset == -1)
         offset = (int32_t)vgacur_get_offset();
@@ -54,11 +72,6 @@ uint16_t vgabuff_output_c(char c, int32_t offset) {
                    ? 0
                    : offset - 1;
         
-        case '\n':
-            return CALC_ROW(offset) == VGA_HEIGHT - 1
-                   ? offset
-                   : (offset + VGA_WIDTH) - (offset % VGA_WIDTH);
-        
         case '\r':
             return offset - offset % VGA_WIDTH;
         
@@ -66,6 +79,13 @@ uint16_t vgabuff_output_c(char c, int32_t offset) {
             return offset > VGA_SIZE - 5
                    ? VGA_SIZE - 1
                    : offset + 4;
+            
+        case '\n': {
+            if (CALC_ROW(offset) == VGA_HEIGHT - 1)
+                vgabuff_scroll(FALSE);
+            
+            return (offset + VGA_WIDTH) - (offset % VGA_WIDTH);
+        }
         
         default: {
             _screen[offset * 2]     = c;

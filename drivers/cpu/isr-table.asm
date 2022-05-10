@@ -6,10 +6,15 @@ isr%+%1:
 
     push %1
     call idt_isr_handler
+    pop eax
 
     popa
-    leave
-    iret
+
+    %if %1 == 8
+        jmp $
+    %else
+        iret
+    %endif
 %endmacro
 
 ISR 0
@@ -45,6 +50,7 @@ ISR 29
 ISR 30
 ISR 31
 
+[global isr_table]
 isr_table:
     %assign i 0
     %rep 32

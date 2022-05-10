@@ -15,4 +15,6 @@ void k_init() {
     pic_remap();
     idt_load_isrtable();
     kbd_init();
+
+    idt_set_register();
 }

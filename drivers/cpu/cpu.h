@@ -23,6 +23,7 @@ typedef struct {
 
 #define IDT_SIZE      256
 #define IDT_ISR_MAX   32
+#define IDT_MESSAGES  19
 #define IDT_DEF_FLAGS 0b10001110
 
 #define GDT_KCODE_SEG 0x8
@@ -31,10 +32,11 @@ uint8_t port_byte_in(uint16_t port);
 void    port_byte_out(uint16_t port, uint8_t data);
 void    port_io_wait();
 
+void idt_set_register();
 void idt_load_isrtable();
+void idt_register_entry(uint16_t vect, volatile void* handler);
 void idt_isr_handler(uint8_t code);
-void idt_register_entry(uint8_t vect, void* handler);
-void idt_construct_entry(idt_desc_t* desc, void* handler);
+void idt_isr_overflow();
 
 void    pic_remap();
 void    pic_send_eoi();

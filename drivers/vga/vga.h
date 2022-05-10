@@ -55,6 +55,7 @@ void     vgabuff_fill(char c);
 void     vgabuff_fill_row(char c, uint16_t row);
 void     vgabuff_fill_col(char c, uint16_t col);
 void     vgabuff_cpy(vga_buff_t buffer);
+void     vgabuff_scroll(bool_t direction);
 uint16_t vgabuff_output_c(char c, int32_t offset);
 
 uint16_t vgacur_get_offset();
