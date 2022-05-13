@@ -3,22 +3,35 @@
 
 #include <libc/types.h>
 
-typedef void(*dispatch_func_t)(uint8_t);
+typedef struct {
+    char    c;
+    uint8_t code;
+    bool_t  shifted;
+    bool_t  ctrl;
+    bool_t  alt;
+} keypress_t;
+
+typedef void(*kbd_callback_t)(uint8_t);
+
+#define PORT_KBD_CTRL   0x64
+#define PORT_KBD_DATA   0x60
+#define PORT_KBD_STATUS 0x64
 
 #define KBD_CODE_SIZE 51
 #define KBD_IRQ_VECT  0x21
 
+// Control buttons
 #define KBD_LSHIFT_DOWN 0x2A
 #define KBD_LSHIFT_UP   0xAA
-
 #define KBD_RSHIFT_DOWN 0x36
 #define KBD_RSHIFT_UP   0xB6
-
 #define KBD_ALT_DOWN    0x38
 #define KBD_ALT_UP      0xB8
+#define KBD_CTRL_DOWN   0x1D
+#define KBD_CTRL_UP     0x9D
 
 void kbd_init();
-void kbd_set_waiting_key(dispatch_func_t dispatch);
+void kbd_set_waiting_key(kbd_callback_t dispatch);
 void kbd_clear_waiting_key();
 void kbd_irq_handler();
 

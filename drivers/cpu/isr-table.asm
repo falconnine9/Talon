@@ -1,3 +1,4 @@
+[bits 32]
 [extern idt_isr_handler]
 
 %macro ISR 1
@@ -9,6 +10,7 @@ isr%+%1:
     pop eax
 
     popa
+    leave
 
     %if %1 == 8
         jmp $

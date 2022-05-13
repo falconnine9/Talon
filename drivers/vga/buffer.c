@@ -1,6 +1,6 @@
 #include "vga.h"
 
-static vga_buff_t _screen = (vga_buff_t)VGA_OFFSET;
+static volatile vga_buff_t _screen = (vga_buff_t)VGA_OFFSET;
 
 void vgabuff_fill(char c) {
     vga_attr_t attr = vga_get_attr();
@@ -40,19 +40,18 @@ void vgabuff_push(vga_buff_t buffer) {
 }
 
 void vgabuff_scroll(bool_t direction) {
-    if (direction == TRUE) {
+    vga_attr_t attr = vga_get_attr();
+
+    if (direction) {
         return;
     }
     else {
-        for (uint16_t i = 0; i < VGA_SIZE; i++) {
-            if (i < VGA_WIDTH)
-                continue;
-            
-            _screen[(i - VGA_WIDTH) * 2] = _screen[i * 2];
+        for (uint16_t i = VGA_WIDTH; i < VGA_SIZE; i++) {
+            _screen[(i - VGA_WIDTH) * 2]     = _screen[i * 2];
             _screen[(i - VGA_WIDTH) * 2 + 1] = _screen[i * 2 + 1];
 
-            _screen[i * 2] = 0;
-            _screen[i * 2 + 1] = vga_get_attr();
+            _screen[i * 2]     = 0;
+            _screen[i * 2 + 1] = attr;
         }
     }
 }
@@ -67,11 +66,6 @@ uint16_t vgabuff_output_c(char c, int32_t offset) {
     vga_attr_t attr = vga_get_attr();
     
     switch (c) {
-        case '\b':
-            return offset == 0
-                   ? 0
-                   : offset - 1;
-        
         case '\r':
             return offset - offset % VGA_WIDTH;
         
@@ -79,12 +73,23 @@ uint16_t vgabuff_output_c(char c, int32_t offset) {
             return offset > VGA_SIZE - 5
                    ? VGA_SIZE - 1
                    : offset + 4;
+        
+        case '\b': {
+            if (offset > 0) {
+                _screen[(offset - 1) * 2] = '\0';
+                return offset - 1;
+            }
+            else
+                return offset;
+        }
             
         case '\n': {
-            if (CALC_ROW(offset) == VGA_HEIGHT - 1)
+            if (CALC_ROW(offset) == VGA_HEIGHT - 1) {
                 vgabuff_scroll(FALSE);
-            
-            return (offset + VGA_WIDTH) - (offset % VGA_WIDTH);
+                return offset - (offset % VGA_WIDTH);
+            }
+            else
+                return (offset + VGA_WIDTH) - (offset % VGA_WIDTH);
         }
         
         default: {

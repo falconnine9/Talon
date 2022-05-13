@@ -2,31 +2,32 @@
 
 #include "cpu.h"
 
-void _pic_remap_io(uint16_t port, uint8_t data);
+static inline void _pic_remap_io(uint16_t port, uint8_t data);
 
 void pic_remap() {
-    uint8_t pic1_mask = 0xFC;
-    uint8_t pic2_mask = 0xFF;
+    _pic_remap_io(PORT_PIC1_CTRL, PIC_ICW_INIT);
+    _pic_remap_io(PORT_PIC2_CTRL, PIC_ICW_INIT);
 
-    _pic_remap_io(PORT_PIC1_CTRL, 0x11);
-    _pic_remap_io(PORT_PIC2_CTRL, 0x11);
+    _pic_remap_io(PORT_PIC1_DATA, PIC_ICW_LOW_OFFSET);
+    _pic_remap_io(PORT_PIC2_DATA, PIC_ICW_HIGH_OFFSET);
 
-    _pic_remap_io(PORT_PIC1_DATA, 0x20);
-    _pic_remap_io(PORT_PIC2_DATA, 0x28);
+    _pic_remap_io(PORT_PIC1_DATA, PIC_ICW_CASCADE1);
+    _pic_remap_io(PORT_PIC2_DATA, PIC_ICW_CASCADE2);
 
-    _pic_remap_io(PORT_PIC1_DATA, 0x4);
-    _pic_remap_io(PORT_PIC2_DATA, 0x2);
-
-    _pic_remap_io(PORT_PIC1_DATA, 0x1);
-    _pic_remap_io(PORT_PIC2_DATA, 0x1);
-
-    _pic_remap_io(PORT_PIC1_DATA, 0xFC);
-    _pic_remap_io(PORT_PIC2_DATA, 0xFF);
+    _pic_remap_io(PORT_PIC1_DATA, PIC_ICW_X86);
+    _pic_remap_io(PORT_PIC2_DATA, PIC_ICW_X86);
 }
 
-void pic_send_eoi() {
+void pic_send_eoi(uint8_t irq) {
     port_byte_out(PORT_PIC1_CTRL, 0x20);
-    port_byte_out(PORT_PIC2_CTRL, 0x20);
+
+    if (irq >= 8)
+        port_byte_out(PORT_PIC2_CTRL, 0x20);
+}
+
+void pic_set_mask(uint8_t mask, uint8_t pic) {
+    uint16_t port = pic == 0 ? PORT_PIC1_DATA : PORT_PIC2_DATA;
+    port_byte_out(port, mask);
 }
 
 uint8_t pic_read_ir() {
@@ -43,7 +44,7 @@ uint8_t pic_read_is() {
     return result;
 }
 
-void _pic_remap_io(uint16_t port, uint8_t data) {
+static inline void _pic_remap_io(uint16_t port, uint8_t data) {
     port_byte_out(port, data);
     port_io_wait();
 }

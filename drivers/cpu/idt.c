@@ -8,7 +8,7 @@ extern void* isr_table[IDT_ISR_MAX];
 static idt_desc_t _idt[IDT_SIZE];
 static idt_reg_t  _idtr;
 
-static char* _isr_messages[IDT_MESSAGES] = {
+static string_t _isr_messages[IDT_MESSAGES] = {
     "Division By Zero",
     "Debug",
     "Non Maskable Interrupt",
@@ -33,7 +33,9 @@ static char* _isr_messages[IDT_MESSAGES] = {
 void idt_set_register() {
     _idtr.limit = (uint16_t)(sizeof(idt_desc_t) * IDT_SIZE - 1);
     _idtr.base  = (uint32_t)_idt;
+
     __asm__("lidt %0" :: "m"(_idtr));
+    __asm__("sti");
 }
 
 void idt_load_isrtable() {
@@ -73,10 +75,7 @@ void idt_isr_handler(uint8_t code) {
 }
 
 void idt_isr_overflow() {
-    __asm__("pusha");
-
     prints("Overflow interrupt called");
-
-    __asm__("popa");
+    __asm__("leave");
     __asm__("iret");
 }

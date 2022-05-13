@@ -7,6 +7,9 @@ PROTECTED_INIT:
     mov fs, ax
     mov gs, ax
 
+    mov ebp, STACK_OFFSET
+    mov esp, ebp
+
 BEGIN_KERNEL:
     jmp KERNEL_OFFSET
     jmp $
