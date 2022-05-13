@@ -52,9 +52,49 @@ void editor_start() {
                 break;
             }
 
-            default:
+            case 0x11: {
+                if (_pressed_key.ctrl && CALC_ROW(offset) > 0) {
+                    vgacur_set_offset(offset - VGA_WIDTH);
+                    break;
+                }
+            }
+
+            case 0x1E: {
+                if (_pressed_key.ctrl && CALC_COLUMN(offset) > 5) {
+                    vgacur_set_offset(offset - 1);
+                    break;
+                }
+            }
+
+            case 0x1F: {
+                if (_pressed_key.ctrl && CALC_ROW(offset) < VGA_HEIGHT - 1) {
+                    vgacur_set_offset(offset + VGA_WIDTH);
+                    break;
+                }
+            }
+
+            case 0x20: {
+                if (_pressed_key.ctrl && CALC_COLUMN(offset) < VGA_WIDTH - 1) {
+                    vgacur_set_offset(offset + 1);
+                    break;
+                }
+            }
+
+            case 0x2D: {
+                if (_pressed_key.ctrl) {
+                    vgabuff_fill(0);
+                    editor_init();
+                    break;
+                }
+            }
+
+            default: {
+                if (CALC_COLUMN(offset) == VGA_WIDTH - 1)
+                    vgacur_set_offset((offset + VGA_WIDTH) - (offset % VGA_WIDTH) + 5);
+                
                 printc(_pressed_key.c);
                 break;
+            }
         }
     }
 }
