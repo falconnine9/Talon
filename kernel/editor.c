@@ -9,11 +9,11 @@
 static keypress_t _pressed_key;
 
 void editor_init() {
-    vga_set_attr(VGA_COMBINE_ATTR(VGA_BLACK, VGA_WHITE_LI));
+    set_out_attr(VGA_BLACK, VGA_WHITE_LI);
     vgabuff_fill(0);
 
-    vga_set_attr(VGA_COMBINE_ATTR(VGA_WHITE, VGA_GRAY));
-    vgacur_set_offset(0);
+    set_out_attr(VGA_WHITE, VGA_GRAY);
+    set_cursor_pos(0, 0);
     char int_s[5];
     for (int i = 1; i <= VGA_HEIGHT; i++) {
         if (i < 10)
@@ -27,18 +27,18 @@ void editor_init() {
             printc('\n');
     }
 
-    vga_set_attr(VGA_COMBINE_ATTR(VGA_BLACK, VGA_WHITE_LI));
-    vgacur_set_offset(CALC_OFFSET(0, 5));
+    set_out_attr(VGA_BLACK, VGA_WHITE_LI);
+    set_cursor_pos(0, 5);
 }
 
 void editor_start() {
     while (TRUE) {
         getkey(&_pressed_key, TRUE);
-        uint16_t offset = vgacur_get_offset();
+        uint16_t offset = get_cursor_off();
 
         switch (_pressed_key.code) {
             case 0x1C:
-                vgacur_set_offset((offset + VGA_WIDTH) - (offset % VGA_WIDTH) + 5);
+                set_cursor_off((offset + VGA_WIDTH) - (offset % VGA_WIDTH) + 5);
                 break;
             
             case 0xE: {
@@ -46,7 +46,7 @@ void editor_start() {
                     break;
 
                 if (CALC_COLUMN(offset) == 5)
-                    vgacur_set_offset(offset - 5);
+                    set_cursor_off(offset - 5);
                 
                 printc('\b');
                 break;
@@ -54,23 +54,26 @@ void editor_start() {
 
             case 0x11: {
                 if (_pressed_key.ctrl && CALC_ROW(offset) > 0) {
-                    vgacur_set_offset(offset - VGA_WIDTH);
+                    set_cursor_off(offset - VGA_WIDTH);
                     break;
                 }
+                goto editor_key_default;
             }
 
             case 0x1E: {
                 if (_pressed_key.ctrl && CALC_COLUMN(offset) > 5) {
-                    vgacur_set_offset(offset - 1);
+                    set_cursor_off(offset - 1);
                     break;
                 }
+                goto editor_key_default;
             }
 
             case 0x1F: {
                 if (_pressed_key.ctrl && CALC_ROW(offset) < VGA_HEIGHT - 1) {
-                    vgacur_set_offset(offset + VGA_WIDTH);
+                    set_cursor_off(offset + VGA_WIDTH);
                     break;
                 }
+                goto editor_key_default;
             }
 
             case 0x20: {
@@ -78,6 +81,7 @@ void editor_start() {
                     vgacur_set_offset(offset + 1);
                     break;
                 }
+                goto editor_key_default;
             }
 
             case 0x2D: {
@@ -86,11 +90,52 @@ void editor_start() {
                     editor_init();
                     break;
                 }
+                goto editor_key_default;
             }
 
+            case 0x2: {
+                if (_pressed_key.ctrl) {
+                    set_out_attr(VGA_BLACK, VGA_WHITE_LI);
+                    break;
+                }
+                goto editor_key_default;
+            }
+
+            case 0x3: {
+                if (_pressed_key.ctrl) {
+                    set_out_attr(VGA_BLUE, VGA_WHITE_LI);
+                    break;
+                }
+                goto editor_key_default;
+            }
+
+            case 0x4: {
+                if (_pressed_key.ctrl) {
+                    set_out_attr(VGA_GREEN, VGA_WHITE_LI);
+                    break;
+                }
+                goto editor_key_default;
+            }
+
+            case 0x5: {
+                if (_pressed_key.ctrl) {
+                    set_out_attr(VGA_CYAN, VGA_WHITE_LI);
+                    break;
+                }
+                goto editor_key_default;
+            }
+
+            case 0x6: {
+                if (_pressed_key.ctrl) {
+                    set_out_attr(VGA_RED, VGA_WHITE_LI);
+                    break;
+                }
+            }
+
+editor_key_default:
             default: {
                 if (CALC_COLUMN(offset) == VGA_WIDTH - 1)
-                    vgacur_set_offset((offset + VGA_WIDTH) - (offset % VGA_WIDTH) + 5);
+                    set_cursor_off((offset + VGA_WIDTH) - (offset % VGA_WIDTH) + 5);
                 
                 printc(_pressed_key.c);
                 break;

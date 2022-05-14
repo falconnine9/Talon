@@ -26,9 +26,9 @@ void prints(string_t str) {
         offset = vgabuff_output_c(c, offset);
     
     if (offset != -1)
-        vgacur_set_offset(offset);
+        set_cursor_off(offset);
 }
 
 void printc(char c) {
-    vgacur_set_offset(vgabuff_output_c(c, -1));
+    set_cursor_off(vgabuff_output_c(c, -1));
 }
