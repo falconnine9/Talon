@@ -1,4 +1,5 @@
 #include <drivers/cpu/cpu.h>
+#include <kernel/interrupts/interrupts.h>
 #include <libc/io.h>
 #include <libc/types.h>
 

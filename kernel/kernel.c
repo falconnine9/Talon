@@ -6,6 +6,7 @@
 #include <libc/types.h>
 
 #include "kernel.h"
+#include "interrupts/interrupts.h"
 
 void k_main() {
     k_init();
