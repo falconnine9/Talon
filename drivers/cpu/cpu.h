@@ -28,6 +28,13 @@ typedef struct {
 #define PIC_ICW_CASCADE2    0x2
 #define PIC_ICW_X86         0x1
 
+#define PORT_PIT_CTRL    0x43
+#define PORT_PIT_COUNTER 0x40
+
+#define PIT_FREQUENCY    1000
+#define PIT_IRQ_VECT     0x20
+#define PIT_INTERVAL_LEN 1000
+
 #define IDT_SIZE      256
 #define IDT_ISR_MAX   32
 #define IDT_MESSAGES  19
@@ -52,5 +59,9 @@ void    pic_set_mask_line(uint8_t irq);
 void    pic_clear_mask_line(uint8_t irq);
 uint8_t pic_read_ir();
 uint8_t pic_read_is();
+
+void     pit_init();
+void     pit_irq();
+uint32_t pit_get_tick();
 
 #endif
