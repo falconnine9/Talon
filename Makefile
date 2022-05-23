@@ -28,11 +28,11 @@ boot.bin: kernel.bin ${BOOT_ASM}
 
 kernel.bin: kernel/entry.o ${KERNEL_OUT}
 	@echo "Linking all kernel output files"
-	@i386-elf-ld -o $@ -Ttext 0x1000 $^ --oformat binary
+	@i386-elf-ld -o $@ -Ttext 0x2210 $^ --oformat binary
 
 %.o: %.c ${HEADERS}
 	@echo "Compiling C file: $<"
-	@i386-elf-gcc -O2 -I "$(CWD)" -include "$(CWD)/libc/types.h" -ffreestanding -c $< -o $@
+	@i386-elf-gcc -O2 -I "$(CWD)" -ffreestanding -c $< -o $@
 
 %.o: %.asm
 	@echo "Compiling assembly file: $<"
@@ -46,3 +46,9 @@ clean:
 run:
 	@echo "Running emulator"
 	@"/mnt/c/Program Files/qemu/qemu-system-x86_64.exe" -fda TalonOS.img
+
+debug:
+	@echo "Starting debugger"
+	@echo "Copy the following into GDB:"
+	@echo "target remote | \"/mnt/c/Program Files/qemu/qemu-system-x86_64.exe\" -S -gdb stdio -m 16 -boot c -fda TalonOS.img"
+	@gdb

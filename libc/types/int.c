@@ -1,3 +1,5 @@
+#include <libc/types.h>
+
 #include "int.h"
 
 size_t int_digits(int n) {

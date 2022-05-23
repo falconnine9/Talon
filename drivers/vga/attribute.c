@@ -1,3 +1,5 @@
+#include <libc/types.h>
+
 #include "vga.h"
 
 static vga_attr_t _attr = VGA_COMBINE_ATTR(VGA_WHITE, VGA_BLACK);

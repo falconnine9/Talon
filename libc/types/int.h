@@ -1,6 +1,8 @@
 #ifndef _LIBC_INT_H
 #define _LIBC_INT_H 1
 
+#include <libc/types.h>
+
 typedef signed char  int8_t;
 typedef signed short int16_t;
 typedef signed int   int32_t;

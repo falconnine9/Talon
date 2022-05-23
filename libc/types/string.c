@@ -1,3 +1,5 @@
+#include <libc/types.h>
+
 #include "string.h"
 
 size_t str_len(string_t str) {

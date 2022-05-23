@@ -4,6 +4,8 @@
 #include <drivers/keyboard/keyboard.h>
 #include <drivers/vga/vga.h>
 
+#include "types.h"
+
 #define get_out_attr()           vga_get_attr()
 #define set_out_attr(fore, back) vga_set_attr(VGA_COMBINE_ATTR(fore, back))
 

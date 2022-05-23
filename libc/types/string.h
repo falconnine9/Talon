@@ -1,6 +1,8 @@
 #ifndef _LIBC_STRING_H
 #define _LIBC_STRING_H 1
 
+#include <libc/types.h>
+
 #include "string.h"
 
 typedef char* string_t;

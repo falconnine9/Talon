@@ -5,7 +5,7 @@ RM_PRINT:
 RM_PRINT_LOOP:
     mov al, [bx]
     cmp al, 0x0
-    je RM_PRINT_NEWLINE
+    je  RM_PRINT_NEWLINE
 
     mov ah, 0x0E
     int 0x10
