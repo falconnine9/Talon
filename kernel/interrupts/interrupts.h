@@ -1,6 +1,7 @@
 #ifndef _INTERRUPTS_H
 #define _INTERRUPTS_H 1
 
+#include <libc/def.h>
 #include <libc/types.h>
 
 typedef struct {
@@ -9,12 +10,12 @@ typedef struct {
     uint8_t  reserved;
     uint8_t  flags;
     uint16_t base_high;
-} __attribute__((packed)) idt_desc_t;
+} packed idt_desc_t;
 
 typedef struct {
     uint16_t limit;
     uint32_t base;
-} __attribute__((packed)) idt_reg_t;
+} packed idt_reg_t;
 
 #define GDT_KCODE_SEG 0x8
 

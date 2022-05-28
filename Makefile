@@ -9,7 +9,7 @@ BOOT_ASM = $(wildcard boot/*.asm boot/*/*.asm)
 KERNEL_ASM = $(wildcard */*.asm */*/*.asm)
 KERNEL_C   = $(wildcard */*.c */*/*.c)
 KERNEL_H   = $(wildcard */*.h */*/*.h)
-KERNEL_OUT = $(filter-out ${BOOT_ASM:.asm=.o} kernel/entry.o, ${KERNEL_C:.c=.o} ${KERNEL_ASM:.asm=.o})
+KERNEL_OUT = $(filter-out ${BOOT_ASM:.asm=.o} kernel/entry.o, ${KERNEL_ASM:.asm=.o} ${KERNEL_C:.c=.o})
 
 # General
 CWD = $(shell pwd)
@@ -32,7 +32,7 @@ kernel.bin: kernel/entry.o ${KERNEL_OUT}
 
 %.o: %.c ${HEADERS}
 	@echo "Compiling C file: $<"
-	@i386-elf-gcc -O2 -I "$(CWD)" -ffreestanding -c $< -o $@
+	@i386-elf-gcc -O2 -m32 -mno-red-zone -I "$(CWD)" -ffreestanding -c $< -o $@
 
 %.o: %.asm
 	@echo "Compiling assembly file: $<"

@@ -5,6 +5,8 @@
 #include "types/int.h"
 #include "types/string.h"
 
+typedef volatile void v_void_t;
+
 #define NULL 0
 
 #endif

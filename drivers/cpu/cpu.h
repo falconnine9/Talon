@@ -35,7 +35,7 @@ uint8_t pic_read_ir();
 uint8_t pic_read_is();
 
 void     pit_init();
-void     pit_irq();
+void     pit_irq_handler();
 uint32_t pit_get_tick();
 
 #endif
