@@ -1,6 +1,5 @@
 #include <kernel/interrupts/interrupts.h>
 #include <libc/def.h>
-#include <libc/io.h>
 #include <libc/types.h>
 
 #include "cpu.h"

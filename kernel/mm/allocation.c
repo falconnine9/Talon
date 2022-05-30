@@ -1,4 +1,3 @@
-#include <kernel/kernel.h>
 #include <libc/types.h>
 
 #include "memory.h"
@@ -9,9 +8,12 @@ void* mm_alloc_block(size_t size) {
         return NULL;
     }
 
-    volatile void*       buf = (volatile void*)HEAP_OFFSET;
+    volatile void*       buf = _mm_heap_offset;
     volatile mm_block_t* blk = buf;
     while (blk->flags.used || blk->limit < size) {
+        if (blk->flags.eom)
+            return NULL;
+
         buf += blk->limit + sizeof(mm_block_t);
         blk  = buf;
     }
