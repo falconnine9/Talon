@@ -7,18 +7,26 @@ GDT_NULL:
 
 GDT_SEG_KCODE:
     dw 0xFFFF
-    dw 0x0
-    db 0x0
-    db 0b10011010
-    db 0b11001111
+    dw 0
+    db 0
+    db 0x9A
+    db 0xCF
     db 0
 
 GDT_SEG_KDATA:
     dw 0xFFFF
-    dw 0x0
+    dw 0
     db 0
-    db 0b10010010
-    db 0b11001111
+    db 0x92
+    db 0xCF
+    db 0
+
+GDT_SEG_TSS:
+    dw 0x68
+    dw 0
+    db 0
+    db 0x81
+    db 0x40
     db 0
 
 GDT_END:

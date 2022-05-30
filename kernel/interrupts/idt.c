@@ -1,7 +1,7 @@
 #include <libc/io.h>
 #include <libc/types.h>
 
-#include "cpu.h"
+#include "interrupts.h"
 
 extern void* isr_table[IDT_ISR_MAX];
 

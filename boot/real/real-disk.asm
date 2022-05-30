@@ -8,7 +8,7 @@ RM_DISK_LOADER:
     mov [SECTORS_LOADED], al
 
     int 0x13
-    jc RM_DISK_ERROR
+    jc  RM_DISK_ERROR
 
     cmp al, [SECTORS_LOADED]
     jne RM_DISK_ERROR
@@ -17,9 +17,9 @@ RM_DISK_LOADER:
     ret
 
 RM_DISK_ERROR:
-    mov bx, MSG_DISK_ERROR
+    mov  bx, MSG_DISK_ERROR
     call RM_PRINT
-    jmp $
+    jmp  $
 
 MSG_DISK_ERROR db 'Error loading sectors from disk', 0
 SECTORS_LOADED db 0

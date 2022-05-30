@@ -1,3 +1,5 @@
+#include <libc/types.h>
+
 #include "vga.h"
 
 static volatile vga_buff_t _screen = (vga_buff_t)VGA_OFFSET;

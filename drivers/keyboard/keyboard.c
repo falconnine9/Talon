@@ -1,5 +1,6 @@
 #include <drivers/cpu/cpu.h>
-#include <libc/io.h>
+#include <kernel/interrupts/interrupts.h>
+#include <libc/def.h>
 #include <libc/types.h>
 
 #include "keyboard.h"

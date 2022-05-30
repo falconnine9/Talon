@@ -6,18 +6,14 @@
 #include <libc/types.h>
 
 #include "kernel.h"
+#include "interrupts/interrupts.h"
+#include "mm/memory.h"
 
 void k_main() {
     k_init();
-    prints("Press enter to start text editor");
+    mm_init(HEAP_MAX);
 
-    keypress_t key;
-    do {
-        getkey(&key, TRUE);
-    } while (key.c != '\n');
-    
-    editor_init();
-    editor_start();
+    prints("Hello world :)");
 
     while (TRUE)
         __asm__("hlt");
@@ -33,5 +29,5 @@ void k_init() {
     pit_init();
 
     idt_set_register();
-    pic_set_mask(0b11111100, 0);
+    pic_set_mask(0b11111101, 0);
 }

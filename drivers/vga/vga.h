@@ -17,6 +17,8 @@
 #ifndef _VGA_H
 #define _VGA_H 1
 
+#include <libc/types.h>
+
 typedef uint8_t vga_attr_t;
 typedef char*   vga_buff_t;
 
