@@ -1,8 +1,6 @@
 #include <drivers/cpu/cpu.h>
 #include <drivers/keyboard/keyboard.h>
 #include <drivers/vga/vga.h>
-#include <libc/io.h>
-#include <libc/sys.h>
 #include <libc/types.h>
 
 #include "kernel.h"
@@ -11,9 +9,11 @@
 
 void k_main() {
     k_init();
-    mm_init(HEAP_MAX);
+    mm_init(HEAP_MAX, HEAP_OFFSET);
 
-    prints("Hello world :)");
+    for (int i = 0; i < 16; i++) {
+        vga_draw_rect(VGA_POS(i * 20, 0), VGA_RECT(20, VGA_HEIGHT), i);
+    }
 
     while (TRUE)
         __asm__("hlt");

@@ -7,8 +7,8 @@ BOOT_ASM = $(wildcard boot/*.asm boot/*/*.asm)
 
 # Kernel files
 KERNEL_ASM = $(wildcard */*.asm */*/*.asm)
-KERNEL_C   = $(wildcard */*.c */*/*.c)
-KERNEL_H   = $(wildcard */*.h */*/*.h)
+KERNEL_C   = $(wildcard */*.c */*/*.c */*/*/*.c)
+KERNEL_H   = $(wildcard */*.h */*/*.h */*/*/*.c)
 KERNEL_OUT = $(filter-out ${BOOT_ASM:.asm=.o} kernel/entry.o, ${KERNEL_ASM:.asm=.o} ${KERNEL_C:.c=.o})
 
 # General

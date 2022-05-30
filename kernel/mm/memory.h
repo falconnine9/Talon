@@ -19,11 +19,10 @@ typedef struct {
     mm_flags_t flags;
 } packed mm_block_t;
 
-#define mm_limit(blk, shif) (blk->limit << shif)
+extern size_t         _mm_heap_size;
+extern volatile void* _mm_heap_offset;
 
-extern size_t _mm_heap_size;
-
-void  mm_init();
+void  mm_init(size_t heap_size, uint32_t heap_offset);
 void* mm_alloc_block(size_t size);
 void  mm_dealloc_block(void* ptr);
 void* mm_get_addr(void* ptr, uint32_t index);

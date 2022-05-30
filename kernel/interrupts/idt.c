@@ -1,4 +1,3 @@
-#include <libc/io.h>
 #include <libc/types.h>
 
 #include "interrupts.h"
@@ -57,25 +56,10 @@ void idt_register_entry(uint16_t vect, volatile void* handler) {
 }
 
 void idt_isr_handler(uint8_t code) {
-    char code_str[5];
-    str_fi(code_str, code);
-
-    prints("Interrupt called: ");
-
-    if (code < IDT_MESSAGES) {
-        prints(_isr_messages[code]);
-        prints(" (");
-        prints(code_str);
-        prints(")\n");
-    }
-    else {
-        prints(code_str);
-        printc('\n');
-    }
+    // Placeholder until VGA Graphics text support
 }
 
 void idt_isr_overflow() {
-    prints("Overflow interrupt called");
     __asm__("leave");
     __asm__("iret");
 }

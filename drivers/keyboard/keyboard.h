@@ -4,14 +4,11 @@
 #include <libc/types.h>
 
 typedef struct {
-    char    c;
-    uint8_t code;
-    bool_t  shifted;
-    bool_t  ctrl;
-    bool_t  alt;
+    uint16_t code;
+    bool_t   up;
 } keypress_t;
 
-typedef void(*kbd_callback_t)(uint8_t);
+typedef void(*kbd_callback_t)(uint16_t);
 
 #define PORT_KBD_CTRL   0x64
 #define PORT_KBD_DATA   0x60
@@ -31,8 +28,8 @@ typedef void(*kbd_callback_t)(uint8_t);
 #define KBD_CTRL_UP     0x9D
 
 void kbd_init();
-void kbd_set_waiting_key(kbd_callback_t dispatch);
-void kbd_clear_waiting_key();
+void kbd_swk(kbd_callback_t dispatch);
+void kbd_cwk();
 void kbd_irq_handler();
 
 char kbd_get_key_char(uint8_t code, bool_t shifted);
