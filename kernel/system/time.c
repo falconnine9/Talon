@@ -1,5 +1,7 @@
 #include <drivers/cpu/cpu.h>
-#include <libc/sys.h>
+#include <libc/types.h>
+
+#include "sys.h"
 
 void sys_sleep(uint32_t ms) {
     uint32_t ms_tick = 0;

@@ -1,12 +1,13 @@
 #ifndef _KEYBOARD_H
 #define _KEYBOARD_H 1
 
+#include <libc/def.h>
 #include <libc/types.h>
 
-typedef struct {
+typedef struct _packed {
     uint16_t code;
     bool_t   up;
-} keypress_t;
+ } keypress_t;
 
 typedef void(*kbd_callback_t)(uint16_t);
 
@@ -27,11 +28,13 @@ typedef void(*kbd_callback_t)(uint16_t);
 #define KBD_CTRL_DOWN   0x1D
 #define KBD_CTRL_UP     0x9D
 
+extern void kbd_irq();
+
 void kbd_init();
 void kbd_swk(kbd_callback_t dispatch);
 void kbd_cwk();
 void kbd_irq_handler();
 
-char kbd_get_key_char(uint8_t code, bool_t shifted);
+char kbd_gkc(uint8_t code, bool_t shifted);
 
 #endif

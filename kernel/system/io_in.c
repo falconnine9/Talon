@@ -1,9 +1,11 @@
 #include <drivers/keyboard/keyboard.h>
-#include <libc/sys.h>
 #include <libc/types.h>
+
+#include "sys.h"
 
 static keypress_t _key;
 static void       _key_callback(uint16_t code);
+static void       _key_clear();
 
 void sys_getkey(keypress_t* k) {
     kbd_swk(_key_callback);
@@ -12,6 +14,7 @@ void sys_getkey(keypress_t* k) {
         __asm__("hlt");
     
     *k = _key;
+    _key_clear();
     kbd_cwk();
 }
 
@@ -31,3 +34,7 @@ static void _key_callback(uint16_t code) {
         _key.code -= 0x81;
 }
 
+static void _key_clear() {
+    _key.code = 0;
+    _key.up   = FALSE;
+}

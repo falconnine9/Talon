@@ -27,7 +27,7 @@ static char key_chars_high[KBD_CODE_SIZE] = {
     ' '
 };
 
-char kbd_get_key_char(uint8_t code, bool_t shifted) {
+char kbd_gkc(uint8_t code, bool_t shifted) {
     for (int i = 0; i < KBD_CODE_SIZE; i++) {
         if (key_codes[i] == code)
             return shifted ? key_chars_high[i] : key_chars_low[i];

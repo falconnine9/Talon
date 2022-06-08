@@ -22,6 +22,8 @@
 #define PIT_IRQ_VECT     0x20
 #define PIT_INTERVAL_LEN 1000
 
+extern void pit_irq();
+
 uint8_t port_byte_in(uint16_t port);
 void    port_byte_out(uint16_t port, uint8_t data);
 void    port_io_wait();
@@ -35,7 +37,7 @@ uint8_t pic_read_ir();
 uint8_t pic_read_is();
 
 void     pit_init();
-void     pit_irq_handler();
 uint32_t pit_get_tick();
+void     pit_irq_handler();
 
 #endif

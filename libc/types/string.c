@@ -9,6 +9,19 @@ size_t str_len(string_t str) {
     return len;
 }
 
+void str_cat(string_t dst, string_t src) {
+    dst += str_len(dst);
+    str_cpy(dst, src);
+}
+
+void str_cpy(string_t dst, string_t src) {
+    char c;
+    do {
+        c      = *src++;
+        *dst++ = c;
+    } while (c != '\0');
+}
+
 void str_fi(string_t str, int n) {
     int sign = n < 0;
     str     += int_digits(n) + sign;
