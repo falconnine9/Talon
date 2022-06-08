@@ -15,10 +15,6 @@ KERNEL_OFFSET equ 0x2210
     mov  al, KERNEL_SECTORS
     call RM_DISK_LOADER
 
-    mov ah, 0
-    mov al, 0x13
-    int 0x10
-
     jmp PROTECTED_ENTRY
 
 %include "boot/gdt.asm"
