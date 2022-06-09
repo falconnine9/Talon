@@ -1,25 +1,35 @@
 [bits 16]
+
 RM_DISK_LOADER:
+    ; General function to load sectors from the disk (Some register
+    ; arguments are passed by the caller, so they aren't found here)
     pusha
 
-    mov ah, 0x2
-    mov ch, 0x0
-    mov dh, 0x0
-    mov [SECTORS_LOADED], al
+    ; ax=2 (read sectors), ch=0 (cylinder 0), dh=0 (head 0)
+    mov    ah, 0x2
+    mov    ch, 0x0
+    mov    dh, 0x0
+    mov    [SECTORS_LOADED], al
 
-    int 0x13
-    jc  RM_DISK_ERROR
+    ; Calls int 13h, if the carry bit was set (error) then the error
+    ; message is sent
+    int    0x13
+    jc     RM_DISK_ERROR
 
-    cmp al, [SECTORS_LOADED]
-    jne RM_DISK_ERROR
+    ; al is now stored with the amount of sectors actually loaded, so
+    ; if that number doesn't line up with the originally requested
+    ; amount of sectors then the error message is sent
+    cmp    al, [SECTORS_LOADED]
+    jne    RM_DISK_ERROR
 
     popa
     ret
 
 RM_DISK_ERROR:
-    mov  bx, MSG_DISK_ERROR
-    call RM_PRINT
-    jmp  $
+    ; Prints out the disk error message, then hangs
+    mov     bx, MSG_DISK_ERROR
+    call    RM_PRINT
+    jmp     $
 
-MSG_DISK_ERROR db 'Error loading sectors from disk', 0
+MSG_DISK_ERROR db 'Boot error: Failed to load kernel from disk', 0
 SECTORS_LOADED db 0
