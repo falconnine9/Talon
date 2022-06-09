@@ -40,7 +40,7 @@ KERNEL_SECTOR equ 0x0002 ; Where the remaining sectors of the kernel are
 %include "boot/protected/protected-entry.asm"
 
 BOOT_DRIVE     db 0
-MSG_BOOT_BEGIN db 'Starting boot sequence', 0
+MSG_BOOT_BEGIN db 'Boot: Starting boot sequence', 0
 
 BOOTSECT:
     times 510-($-$$) db 0

@@ -22,14 +22,22 @@ RM_DISK_LOADER:
     cmp    al, [SECTORS_LOADED]
     jne    RM_DISK_ERROR
 
+    call   RM_DISK_SUCCESS
     popa
+    ret
+
+RM_DISK_SUCCESS:
+    ; Prints out the disk success message
+    mov    bx, MSG_DISK_SUCCESS
+    call   RM_PRINT
     ret
 
 RM_DISK_ERROR:
     ; Prints out the disk error message, then hangs
-    mov     bx, MSG_DISK_ERROR
-    call    RM_PRINT
-    jmp     $
+    mov    bx, MSG_DISK_ERROR
+    call   RM_PRINT
+    jmp    $
 
-MSG_DISK_ERROR db 'Boot error: Failed to load kernel from disk', 0
-SECTORS_LOADED db 0
+SECTORS_LOADED   db 0
+MSG_DISK_SUCCESS db 'Boot: Loaded sectors from disk', 0
+MSG_DISK_ERROR   db 'Boot error: Failed to load sectors from disk', 0
