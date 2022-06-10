@@ -21,6 +21,9 @@ BEGIN_KERNEL:
     ; argument is the first pushed onto the stack). This takes the
     ; 16 bit value MEM_SIZE which has been loaded recently while in
     ; real mode and gives it to the kernel
+    mov    ax, 0x200
+    push   ax
+
     mov    ax, [MEM_SIZE]
     push   ax
 

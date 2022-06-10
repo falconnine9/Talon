@@ -30,20 +30,6 @@ void pic_set_mask(uint8_t mask, uint8_t pic) {
     port_byte_out(port, mask);
 }
 
-uint8_t pic_read_ir() {
-    port_byte_out(PORT_PIC1_CTRL, 0xA);
-    uint8_t result = port_byte_in(PORT_PIC1_CTRL);
-
-    return result;
-}
-
-uint8_t pic_read_is() {
-    port_byte_out(PORT_PIC1_CTRL, 0xB);
-    uint8_t result = port_byte_in(PORT_PIC1_CTRL);
-
-    return result;
-}
-
 static inline void _pic_remap_io(uint16_t port, uint8_t data) {
     port_byte_out(port, data);
     port_io_wait();

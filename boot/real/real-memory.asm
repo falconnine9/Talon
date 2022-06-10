@@ -33,23 +33,22 @@ DETECT_MEMORY:
 MEMORY_A20_SUCCESS:
     ; Prints out the A20 line success message
     mov    bx, MSG_MEM_A20_SUCCESS
-    call   RM_PRINT
+    call   RM_ALERT
     ret
 
 MEMORY_DETECT_SUCCESS:
     ; Prints out the memory detection success message
     mov    bx, MSG_MEM_DETECT_SUCCESS
-    call   RM_PRINT
+    call   RM_ALERT
     ret
-
 
 MEMORY_DETECT_ERROR:
     ; Prints out the memory detection error message, then hangs
     mov    bx, MSG_MEM_DETECT_ERROR
-    call   RM_PRINT
+    call   RM_ALERT_ERR
     jmp    $
 
 MEM_SIZE               dw 0
-MSG_MEM_A20_SUCCESS    db 'Boot: A20 line enabled', 0
-MSG_MEM_DETECT_SUCCESS db 'Boot: High memory size detected', 0
-MSG_MEM_DETECT_ERROR   db 'Boot error: Failed to detect memory size', 0
+MSG_MEM_A20_SUCCESS    db 'A20 line enabled', 0
+MSG_MEM_DETECT_SUCCESS db 'High memory size detected', 0
+MSG_MEM_DETECT_ERROR   db 'Failed to detect memory size', 0

@@ -13,7 +13,7 @@ KERNEL_SECTOR equ 0x0002 ; Where the remaining sectors of the kernel are
 
     ; Print the boot sequence message
     mov    bx, MSG_BOOT_BEGIN
-    call   RM_PRINT
+    call   RM_ALERT
 
     ; Load in the remaining sectors of the kernel
     mov    dl, [BOOT_DRIVE]
@@ -34,13 +34,14 @@ KERNEL_SECTOR equ 0x0002 ; Where the remaining sectors of the kernel are
 
 %include "boot/real/real-disk.asm"
 %include "boot/real/real-memory.asm"
+%include "boot/real/real-util.asm"
 %include "boot/real/real-vga.asm"
 
 %include "boot/protected/protected-body.asm"
 %include "boot/protected/protected-entry.asm"
 
 BOOT_DRIVE     db 0
-MSG_BOOT_BEGIN db 'Boot: Starting boot sequence', 0
+MSG_BOOT_BEGIN db 'Starting boot sequence', 0
 
 BOOTSECT:
     times 510-($-$$) db 0

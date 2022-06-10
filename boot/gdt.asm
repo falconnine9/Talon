@@ -51,13 +51,50 @@ GDT_SEG_KDATA:
     db 0xCF
     db 0
 
-GDT_SEG_TSS:
-    ; Task state segment (System segment)
-    dw 0x68
+GDT_SEG_UCODE:
+    ; User code segment
+    ;  - Present:           True
+    ;  - DPL:               3 (User)
+    ;  - Descriptor:        1 (data/code)
+    ;  - Executable:        True
+    ;  - Direct/Conforming: False
+    ;  - Read/Write:        True
+    ;  - Accessed:          False
+    ;  - Granularity:       True (4KiB blocks)
+    ;  - Size:              1 (32 bit)
+    ;  - Long:              False (32 bit)
+    dw 0xFFFF
     dw 0
     db 0
-    db 0x81
-    db 0x40
+    db 0xFA
+    db 0xCF
+    db 0
+
+GDT_SEG_UDATA:
+    ; User data segment
+    ;  - Present:           True
+    ;  - DPL:               3 (User)
+    ;  - Descriptor:        1 (data/code)
+    ;  - Executable:        False
+    ;  - Direct/Conforming: False
+    ;  - Read/Write:        True
+    ;  - Accessed:          False
+    ;  - Granularity:       True (4KiB blocks)
+    ;  - Size:              1 (32 bit)
+    ;  - Long:              False (32 bit)
+    dw 0xFFFF
+    dw 0
+    db 0
+    db 0xF2
+    db 0xCF
+    db 0
+
+GDT_SEG_TSS:
+    dw 0x68
+    dw 0x200
+    db 0
+    db 0x89
+    db 0
     db 0
 
 GDT_END:
