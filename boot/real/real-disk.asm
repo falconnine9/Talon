@@ -29,15 +29,15 @@ RM_DISK_LOADER:
 RM_DISK_SUCCESS:
     ; Prints out the disk success message
     mov    bx, MSG_DISK_SUCCESS
-    call   RM_PRINT
+    call   RM_ALERT
     ret
 
 RM_DISK_ERROR:
     ; Prints out the disk error message, then hangs
     mov    bx, MSG_DISK_ERROR
-    call   RM_PRINT
+    call   RM_ALERT_ERR
     jmp    $
 
 SECTORS_LOADED   db 0
-MSG_DISK_SUCCESS db 'Boot: Loaded sectors from disk', 0
-MSG_DISK_ERROR   db 'Boot error: Failed to load sectors from disk', 0
+MSG_DISK_SUCCESS db 'Loaded sectors from disk', 0
+MSG_DISK_ERROR   db 'Failed to load sectors from disk', 0

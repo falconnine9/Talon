@@ -26,6 +26,9 @@ RM_PRINT_LOOP:
 
 RM_PRINT_NEWLINE:
     ; Outputs a newline after the string has been printed
+    cmp    dl, 0
+    je     RM_PRINT_DONE
+
     mov    ah, 0x0E
     mov    al, 0x0A
     int    0x10

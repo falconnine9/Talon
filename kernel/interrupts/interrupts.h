@@ -4,18 +4,18 @@
 #include <libc/def.h>
 #include <libc/types.h>
 
-typedef struct _packed {
+typedef struct {
     uint16_t base_low;
     uint16_t segment;
     uint8_t  reserved;
     uint8_t  flags;
     uint16_t base_high;
-} idt_desc_t;
+} __attribute__((packed)) idt_desc_t;
 
-typedef struct _packed {
+typedef struct {
     uint16_t limit;
     uint32_t base;
-} idt_reg_t;
+} __attribute__((packed)) idt_reg_t;
 
 #define GDT_KCODE_SEG 0x8
 
