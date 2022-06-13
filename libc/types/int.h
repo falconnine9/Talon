@@ -1,7 +1,7 @@
 #ifndef _LIBC_INT_H
 #define _LIBC_INT_H 1
 
-#include <libc/types.h>
+#include <libc/libc.h>
 
 typedef signed char  int8_t;
 typedef signed short int16_t;
@@ -15,6 +15,7 @@ typedef unsigned int intptr_t;
 typedef unsigned int uintptr_t;
 
 typedef uint32_t size_t;
+typedef uint8_t  byte;
 
 #define INT8_MAX  127
 #define INT16_MAX 32767

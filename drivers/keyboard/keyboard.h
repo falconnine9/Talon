@@ -1,8 +1,7 @@
 #ifndef _KEYBOARD_H
 #define _KEYBOARD_H 1
 
-#include <libc/def.h>
-#include <libc/types.h>
+#include <libc/libc.h>
 
 typedef struct _packed {
     uint16_t code;

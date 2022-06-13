@@ -1,23 +1,22 @@
 #ifndef _MEMORY_H
 #define _MEMORY_H
 
-#include <libc/def.h>
-#include <libc/types.h>
+#include <libc/libc.h>
 
-typedef struct _packed {
+typedef struct  {
     uint8_t used  : 1;
     uint8_t som   : 1;
     uint8_t eom   : 1;
     uint8_t pused : 1;
     uint8_t nused : 1;
     uint8_t res   : 3;
-} mm_flags_t;
+} __attribute__((packed)) mm_flags_t;
 
-typedef struct _packed {
+typedef struct {
     uint32_t   limit;
     uint32_t   low;
     mm_flags_t flags;
-} mm_block_t;
+} __attribute__((packed)) mm_block_t;
 
 extern size_t         _mm_heap_size;
 extern volatile void* _mm_heap_offset;

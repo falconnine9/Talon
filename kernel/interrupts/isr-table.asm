@@ -3,19 +3,19 @@
 
 %macro ISR 1
 isr%+%1:
-    pusha
+    pushad
 
     push %1
     call idt_isr_handler
     pop eax
 
-    popa
+    popad
     leave
 
     %if %1 == 8
         jmp $
     %else
-        iret
+        iretd
     %endif
 %endmacro
 

@@ -5,10 +5,10 @@
 pit_irq:
     pushad
 
-    call pit_irq_handler
+    call   pit_irq_handler
 
     popad
-    iret
+    iretd
 
 [extern rtc_irq_handler]
 [global rtc_irq]
@@ -18,4 +18,4 @@ rtc_irq:
     call rtc_irq_handler
 
     popad
-    iret
+    iretd

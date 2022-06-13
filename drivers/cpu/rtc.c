@@ -1,5 +1,5 @@
 #include <kernel/kernel.h>
-#include <libc/types.h>
+#include <libc/libc.h>
 
 #include "cpu.h"
 

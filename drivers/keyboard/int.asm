@@ -3,9 +3,9 @@
 [global kbd_irq]
 
 kbd_irq:
-    pusha
+    pushad
 
-    call kbd_irq_handler
+    call   kbd_irq_handler
 
-    popa
-    iret
+    popad
+    iretd

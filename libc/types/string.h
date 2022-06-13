@@ -1,7 +1,7 @@
 #ifndef _LIBC_STRING_H
 #define _LIBC_STRING_H 1
 
-#include <libc/types.h>
+#include <libc/libc.h>
 
 #include "string.h"
 

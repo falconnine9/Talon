@@ -1,8 +1,7 @@
 #ifndef _VGA_H
 #define _VGA_H 1
 
-#include <libc/def.h>
-#include <libc/types.h>
+#include <libc/libc.h>
 
 typedef uint16_t* vga_buf_t;
 

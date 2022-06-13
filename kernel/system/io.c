@@ -1,11 +1,27 @@
 #include <drivers/keyboard/keyboard.h>
-#include <libc/types.h>
+#include <libc/libc.h>
 
 #include "sys.h"
+#include "sys_masks.h"
 
 static keypress_t _key;
 static void       _key_callback(uint16_t code);
 static void       _key_clear();
+
+/*********************
+ * System call masks *
+ *********************/
+
+void sysmask_getkey() {
+    uint32_t k_ptr;
+    __asm__("movl %%ebx, %0" : "=r"(k_ptr));
+
+    sys_getkey((keypress_t*)k_ptr);
+}
+
+/***********************
+ * System call methods *
+ ***********************/
 
 void sys_getkey(keypress_t* k) {
     kbd_swk(_key_callback);

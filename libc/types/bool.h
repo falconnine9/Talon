@@ -1,7 +1,7 @@
 #ifndef _LIBC_BOOL_H
 #define _LIBC_BOOL_H 1
 
-#include <libc/types.h>
+#include <libc/libc.h>
 
 typedef unsigned char bool_t;
 

@@ -3,5 +3,5 @@
 [global _start]
 
 _start:
-    call k_main
-    jmp $
+    call   k_main
+    jmp    $

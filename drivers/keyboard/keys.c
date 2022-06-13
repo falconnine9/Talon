@@ -1,4 +1,4 @@
-#include <libc/types.h>
+#include <libc/libc.h>
 
 #include "keyboard.h"
 

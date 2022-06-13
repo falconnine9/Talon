@@ -1,8 +1,7 @@
 #ifndef _INTERRUPTS_H
 #define _INTERRUPTS_H 1
 
-#include <libc/def.h>
-#include <libc/types.h>
+#include <libc/libc.h>
 
 typedef struct {
     uint16_t base_low;

@@ -1,5 +1,5 @@
 #include <drivers/cpu/cpu.h>
-#include <libc/types.h>
+#include <libc/libc.h>
 
 #include "vga.h"
 
