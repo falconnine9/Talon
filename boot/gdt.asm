@@ -91,7 +91,7 @@ GDT_SEG_UDATA:
 
 GDT_SEG_TSS:
     dw 0x68
-    dw 0x200
+    dw 0
     db 0
     db 0x89
     db 0
