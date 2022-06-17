@@ -38,7 +38,7 @@ void sys_getpit(uint32_t* tick) {
 }
 
 void sys_getdatetime(datetime_t* dt) {
-    *dt = k_datetime;
+    *dt = k_dt;
 }
 
 void sys_setdatetime(datetime_t* dt) {

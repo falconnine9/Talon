@@ -5,16 +5,13 @@
 
 #include "kernel.h"
 
-uint16_t   k_memory;
-datetime_t k_datetime;
+uint32_t   k_ml;
+datetime_t k_dt;
 
-// The mem_limit and tss values are provided by the bootloader
-void k_main(uint16_t mem_limit) {
-    k_memory = mem_limit;
-    
+// The mem_limit and heap_start values are provided by the bootloader
+void k_main(uint32_t ml) {
+    k_ml = ml;
     k_init();
-    mm_init(k_memory, HEAP_OFFSET);
-    sys_alert("Heap initialized after 1MiB", ALERT_INFO);
 }
 
 void k_init() {
@@ -36,6 +33,10 @@ void k_init() {
     syscall_init();
     sys_alert("System calls ready", ALERT_INFO);
 
+    mm_init();
+    sys_alert("Paging ready", ALERT_INFO);
+
     pic_set_mask(0b11111100, 0);
     idt_set_register();
+    sys_alert("IDT register set and PIC enabled", ALERT_INFO);
 }

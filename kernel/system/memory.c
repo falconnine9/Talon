@@ -28,9 +28,9 @@ void sysmask_mfree() {
  ***********************/
 
 void sys_malloc(void* ptr, size_t size) {
-    *(byte**)ptr = mm_alloc_block(size);
+    // Nothing here yet
 }
 
 void sys_mfree(void* ptr) {
-    mm_dealloc_block((void*)((uint32_t)ptr - sizeof(mm_block_t)));
+    // Nothing here yet
 }

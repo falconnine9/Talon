@@ -19,10 +19,12 @@ PROTECTED_INIT:
 BEGIN_KERNEL:
     ; The 32 bit C ABI reads function arguments off the stack (last
     ; argument is the first pushed onto the stack). This takes the
-    ; 16 bit value MEM_SIZE which has been loaded recently while in
+    ; 32 bit value MEM_SIZE which has been loaded recently while in
     ; real mode and gives it to the kernel
-    mov    ax, [MEM_SIZE]
-    push   ax
+    mov    eax, [MEM_SIZE]
+    mov    ecx, 1024
+    mul    ecx
+    push   eax
 
     ; Give control the kernel. The code never returns back here
     jmp    KERNEL_OFFSET

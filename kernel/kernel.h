@@ -8,14 +8,13 @@
 #include "mm/memory.h"
 #include "system/sys.h"
 
-#define STACK_OFFSET  0x2200    // 8KiB stack area
-#define KERNEL_OFFSET 0x2210    // ~400KiB kernel area
-#define HEAP_OFFSET   0x100000  // Heap start at 1MiB
+#define STACK_OFFSET  0x2200
+#define KERNEL_OFFSET 0x2210
 
-extern uint16_t   k_memory;
-extern datetime_t k_datetime;
+extern uint32_t   k_ml;
+extern datetime_t k_dt;
 
-void k_main(uint16_t mem_limit);
+void k_main(uint32_t ml);
 void k_init();
 
 #endif

@@ -59,10 +59,10 @@ void rtc_inc(datetime_t* dt) {
 }
 
 void rtc_irq_handler() {
-    if (k_datetime.year == 0)
-        rtc_read(&k_datetime);
+    if (k_dt.year == 0)
+        rtc_read(&k_dt);
     else
-        rtc_inc(&k_datetime);
+        rtc_inc(&k_dt);
 
     pic_send_eoi(0x20 - RTC_IRQ_VECT);
 }
